@@ -31,13 +31,11 @@ export class UserRegistrationPage {
   }
 
   getErrorPasswordInput() {
-    // cy.get(this.passwordInput).siblings('.input-error');
-    cy.get('input[name="password"]').siblings(".input-error");
+    return cy.get(this.passwordInput).siblings(".input-error");
   }
 
   getErrorConfirmPasswordInput() {
-    // cy.get(this.confirmPasswordInput).siblings('.input-error');
-    cy.get('input[name="confirmPassword"]').siblings(".input-error");
+    return cy.get(this.confirmPasswordInput).siblings(".input-error");
   }
 
   clickSubmitButton() {

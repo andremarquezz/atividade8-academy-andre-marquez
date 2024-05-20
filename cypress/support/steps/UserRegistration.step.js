@@ -153,8 +153,8 @@ Then(
   () => {
     const errorMessage = "As senhas devem ser iguais.";
 
-    cy.get('input[name="confirmPassword"]')
-      .siblings(".input-error")
+    userRegistrationPage
+      .getErrorConfirmPasswordInput()
       .should("be.visible")
       .and("contain.text", errorMessage);
   }
