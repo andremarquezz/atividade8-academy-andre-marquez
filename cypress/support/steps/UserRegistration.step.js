@@ -98,22 +98,18 @@ Then(
     cy.wait("@registerUser");
     cy.wait("@authUser");
 
-    cy.window().then((win) => {
-      const sessionInfo = JSON.parse(
-        win.sessionStorage.getItem("user-session-info")
-      );
-      const currentUser = Cypress.env("CURRENT_USER");
+    const sessionInfo = JSON.parse(sessionStorage.getItem("user-session-info"));
+    const currentUser = Cypress.env("CURRENT_USER");
 
-      expect(sessionInfo).to.have.property("state");
-      expect(sessionInfo.state).to.have.property("user");
-      expect(sessionInfo.state.user).to.have.property("id");
-      expect(sessionInfo.state.user.id).to.be.a("number");
-      expect(sessionInfo.state.user).to.deep.include({
-        name: currentUser.name,
-        email: currentUser.email,
-        type: 0,
-        active: true,
-      });
+    expect(sessionInfo).to.have.property("state");
+    expect(sessionInfo.state).to.have.property("user");
+    expect(sessionInfo.state.user).to.have.property("id");
+    expect(sessionInfo.state.user.id).to.be.a("number");
+    expect(sessionInfo.state.user).to.deep.include({
+      name: currentUser.name,
+      email: currentUser.email,
+      type: 0,
+      active: true,
     });
 
     const successMessage = "Cadastro realizado!";
