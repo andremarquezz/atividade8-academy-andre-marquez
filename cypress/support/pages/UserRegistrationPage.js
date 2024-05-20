@@ -1,8 +1,8 @@
 export class UserRegistrationPage {
   nameInput = "input[name='name']";
   emailInput = "input[name='email']";
-  passwordInput = "input[name='password']";
-  confirmPasswordInput = "input[name='confirmPassword']";
+  passwordInput = 'input[name="password"]';
+  confirmPasswordInput = 'input[name="confirmPassword"]';
   submitButton = "button.account-save-button";
   modal = ".modal-body";
   URL = "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/register";
@@ -28,6 +28,16 @@ export class UserRegistrationPage {
 
   getModal() {
     return cy.get(this.modal);
+  }
+
+  getErrorPasswordInput() {
+    // cy.get(this.passwordInput).siblings('.input-error');
+    cy.get('input[name="password"]').siblings(".input-error");
+  }
+
+  getErrorConfirmPasswordInput() {
+    // cy.get(this.confirmPasswordInput).siblings('.input-error');
+    cy.get('input[name="confirmPassword"]').siblings(".input-error");
   }
 
   clickSubmitButton() {

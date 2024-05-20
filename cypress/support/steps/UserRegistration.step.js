@@ -22,7 +22,7 @@ Given("que acessei a página de cadastro", () => {
 });
 
 When(
-  "preencher um nome válido, um email válido e confirmar a senha corretamente",
+  "preencher um nome válido, um email válido, uma senha válida e confirmar a senha corretamente",
   () => {
     const name = faker.person.fullName();
     const email = faker.internet.email();
@@ -33,6 +33,38 @@ When(
     userRegistrationPage.register(name, email, password);
   }
 );
+
+When("preencher um nome válido", () => {
+  const name = faker.person.fullName();
+  userRegistrationPage.typeName(name);
+});
+
+When("preencher um email válido", () => {
+  const email = faker.internet.email();
+  userRegistrationPage.typeEmail(email);
+});
+
+When("preencher um email inválido {string}", (email) => {
+  userRegistrationPage.typeEmail(email);
+});
+
+When(
+  "preencher os campos de senha e confirmação de senha com uma senha inválida {string}",
+  (password) => {
+    userRegistrationPage.typePassword(password);
+    userRegistrationPage.typeConfirmPassword(password);
+  }
+);
+
+When("preencher uma senha válida e confirmar a senha corretamente", () => {
+  const password = "123456";
+  userRegistrationPage.typePassword(password);
+  userRegistrationPage.typeConfirmPassword(password);
+});
+
+When("clicar no botão de Cadastrar", () => {
+  userRegistrationPage.clickSubmitButton();
+});
 
 Then(
   "o cadastro deve ser realizado com sucesso e devo ver a mensagem de sucesso",
@@ -61,6 +93,29 @@ Then(
     userRegistrationPage
       .getModal()
       .should("be.visible")
+      .and("contain.text", "Sucesso")
       .and("contain.text", "Cadastro realizado!");
+  }
+);
+
+Then("devo ver a mensagem de erro {string}", (errorMessage) => {
+  userRegistrationPage
+    .getModal()
+    .should("be.visible")
+    .and("contain.text", errorMessage);
+});
+
+Then(
+  "o cadastro não deve ser realizado e devo ver a mensagem de erro {string}",
+  (errorMessage) => {
+    cy.get('input[name="password"]')
+      .siblings(".input-error")
+      .should("be.visible")
+      .and("contain.text", errorMessage);
+
+    cy.get('input[name="confirmPassword"]')
+      .siblings(".input-error")
+      .should("be.visible")
+      .and("contain.text", errorMessage);
   }
 );
