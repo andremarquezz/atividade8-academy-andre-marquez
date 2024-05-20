@@ -25,13 +25,13 @@ Given("que estou cadastrado", () => {
 });
 
 When("preencher o email com um e-mail válido", () => {
-  const email = Cypress.env("currentUser").email;
+  const email = Cypress.env("CURRENT_USER").email;
 
   userLoginPage.typeEmail(email);
 });
 
 When("preencher a senha com uma senha válida", () => {
-  const password = Cypress.env("currentUser").password;
+  const password = Cypress.env("CURRENT_USER").password;
 
   userLoginPage.typePassword(password);
 });
@@ -50,13 +50,17 @@ When("preencher o email com um e-mail inválido", () => {
 
 Then("devo ser autenticado e ser redirecionado para a página inicial", () => {
   cy.wait("@authUser").then(() => {
-    const sessionInfo = JSON.parse(sessionStorage.getItem("session-info"));
+    cy.window().then((win) => {
+      const sessionInfo = JSON.parse(
+        win.sessionStorage.getItem("session-info")
+      );
 
-    expect(sessionInfo).to.be.an("object");
-    expect(sessionInfo.state).to.have.property("accessToken");
-    // expect(sessionInfo.accessToken).to.be.a("string");
-    // expect(sessionInfo.accessToken).to.not.be.null;
-    // expect(sessionInfo.accessToken).to.not.be.empty;
+      expect(sessionInfo).to.be.an("object");
+      expect(sessionInfo.state).to.have.property("accessToken");
+      // expect(sessionInfo.accessToken).to.be.a("string");
+      // expect(sessionInfo.accessToken).to.not.be.null;
+      // expect(sessionInfo.accessToken).to.not.be.empty;
+    });
   });
 
   cy.url().should("eq", "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/");
