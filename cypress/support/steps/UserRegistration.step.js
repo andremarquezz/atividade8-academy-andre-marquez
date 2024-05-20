@@ -21,6 +21,20 @@ Given("que acessei a página de cadastro", () => {
   userRegistrationPage.visit();
 });
 
+When("preencher um email já cadastrado", () => {
+  const name = faker.person.fullName();
+  const password = "123456";
+  const email = faker.internet.email();
+
+  const apiUrl = Cypress.env("API_URL");
+
+  cy.request("POST", `${apiUrl}/users`, { name, password, email })
+    .as("RegisteringEmail")
+    .then(() => {
+      userRegistrationPage.typeEmail(email);
+    });
+});
+
 When(
   "preencher um nome válido, um email válido, uma senha válida e confirmar a senha corretamente",
   () => {
@@ -48,6 +62,10 @@ When("preencher um email inválido {string}", (email) => {
   userRegistrationPage.typeEmail(email);
 });
 
+When("preencher o email {string}", () => {
+  userRegistrationPage.typeEmail(email);
+});
+
 When(
   "preencher os campos de senha e confirmação de senha com uma senha inválida {string}",
   (password) => {
@@ -64,6 +82,14 @@ When("preencher uma senha válida e confirmar a senha corretamente", () => {
 
 When("clicar no botão de Cadastrar", () => {
   userRegistrationPage.clickSubmitButton();
+});
+
+When("preencher uma senha válida e confirmar a senha incorretamente", () => {
+  const password = "123456";
+  const confirmPassword = "1234567";
+
+  userRegistrationPage.typePassword(password);
+  userRegistrationPage.typeConfirmPassword(confirmPassword);
 });
 
 Then(
@@ -90,11 +116,13 @@ Then(
       });
     });
 
+    const successMessage = "Cadastro realizado!";
+
     userRegistrationPage
       .getModal()
       .should("be.visible")
       .and("contain.text", "Sucesso")
-      .and("contain.text", "Cadastro realizado!");
+      .and("contain.text", successMessage);
   }
 );
 
@@ -116,6 +144,31 @@ Then(
     cy.get('input[name="confirmPassword"]')
       .siblings(".input-error")
       .should("be.visible")
+      .and("contain.text", errorMessage);
+  }
+);
+
+Then(
+  "o cadastro não deve ser realizado e devo ver a mensagem que as senhas devem ser iguais.",
+  () => {
+    const errorMessage = "As senhas devem ser iguais.";
+
+    cy.get('input[name="confirmPassword"]')
+      .siblings(".input-error")
+      .should("be.visible")
+      .and("contain.text", errorMessage);
+  }
+);
+
+Then(
+  "o cadastro não deve ser realizado e devo ver a mensagem de erro que o e-mail já esta cadastrado",
+  () => {
+    const errorMessage = "E-mail já cadastrado. Utilize outro e-mail";
+
+    userRegistrationPage
+      .getModal()
+      .should("be.visible")
+      .and("contain.text", "Falha no cadastro.")
       .and("contain.text", errorMessage);
   }
 );

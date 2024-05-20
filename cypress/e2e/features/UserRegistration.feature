@@ -34,12 +34,17 @@ Funcionalidade: Cadastro de usuário
     | 1234567891023     | A senha deve ter no máximo 12 dígitos. |
     | 12345678910123468 | A senha deve ter no máximo 12 dígitos. |
 
-#  Cenário: Não deve ser possível cadastrar um usuário com senhas diferentes
-#    Quando preencher um nome válido, um email válido, uma senha válida e confirmar a senha incorretamente
-#    Então o cadastro não deve ser realizado e devo ver a mensagem de erro
+ Cenário: Deve exibir mensagem de erro ao confirmar a senha incorretamente
+   Quando preencher um nome válido
+   E preencher um email válido
+   E preencher uma senha válida e confirmar a senha incorretamente
+   E clicar no botão de Cadastrar
+   Então o cadastro não deve ser realizado e devo ver a mensagem que as senhas devem ser iguais.
 
-#  Cenário: Não deve ser possível cadastrar um usuário com email já cadastrado
-#   Dado que o email "jey@gmail.com" já está cadastrado
-#    Quando preencher um nome válido, o email "jey@gmail.com", uma senha válida e confirmar a senha corretamente
-#    Então o cadastro não deve ser realizado e devo ver a mensagem de erro
+ Cenário: Deve exibir mensagem de erro ao cadastrar um usuário com email já cadastrado
+   Quando preencher um nome válido
+   E preencher um email já cadastrado
+   E preencher uma senha válida e confirmar a senha corretamente
+   E clicar no botão de Cadastrar
+   Então o cadastro não deve ser realizado e devo ver a mensagem de erro que o e-mail já esta cadastrado
 
