@@ -60,6 +60,44 @@ When("clicar em Alterar senha", () => {
   userManagementPage.clickChangePasswordButton();
 });
 
+When("o tipo de usuário for do tipo {string}", (type) => {
+  switch (type) {
+    case "0":
+      break;
+    case "1":
+      cy.window().then((win) => {
+        let sessionInfo = JSON.parse(
+          win.sessionStorage.getItem("user-session-info")
+        );
+        sessionInfo.state.user.type = 1;
+        win.sessionStorage.setItem(
+          "user-session-info",
+          JSON.stringify(sessionInfo)
+        );
+
+        cy.reload();
+      });
+      break;
+    case "2":
+      cy.window().then((win) => {
+        let sessionInfo = JSON.parse(
+          win.sessionStorage.getItem("user-session-info")
+        );
+        sessionInfo.state.user.type = 2;
+        win.sessionStorage.setItem(
+          "user-session-info",
+          JSON.stringify(sessionInfo)
+        );
+
+        cy.reload();
+      });
+      break;
+    default:
+      console.log("Tipo de usuário desconhecido");
+      break;
+  }
+});
+
 When("preencher os campos de senha e confirmação de senha corretamente", () => {
   const password = "12345678";
   userManagementPage.getPasswordInput().type(password);
