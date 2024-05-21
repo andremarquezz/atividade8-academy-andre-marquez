@@ -57,9 +57,9 @@ Then("devo ser autenticado e ser redirecionado para a página inicial", () => {
 
       expect(sessionInfo).to.be.an("object");
       expect(sessionInfo.state).to.have.property("accessToken");
-      // expect(sessionInfo.accessToken).to.be.a("string");
-      // expect(sessionInfo.accessToken).to.not.be.null;
-      // expect(sessionInfo.accessToken).to.not.be.empty;
+      expect(sessionInfo.state.accessToken).to.be.a("string");
+      expect(sessionInfo.state.accessToken).to.not.be.null;
+      // expect(sessionInfo.state.accessToken).to.not.be.empty;
     });
   });
 

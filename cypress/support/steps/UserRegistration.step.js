@@ -136,12 +136,14 @@ Then("devo ver a mensagem de erro {string}", (errorMessage) => {
 Then(
   "o cadastro não deve ser realizado e devo ver a mensagem de erro {string}",
   (errorMessage) => {
-    cy.get('input[name="password"]')
+    userRegistrationPage
+      .getErrorPasswordInput()
       .siblings(".input-error")
       .should("be.visible")
       .and("contain.text", errorMessage);
 
-    cy.get('input[name="confirmPassword"]')
+    userRegistrationPage
+      .getErrorConfirmPasswordInput()
       .siblings(".input-error")
       .should("be.visible")
       .and("contain.text", errorMessage);
