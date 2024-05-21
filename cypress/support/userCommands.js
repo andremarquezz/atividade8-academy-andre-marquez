@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+const apiUrl = Cypress.env("API_URL");
 
 Cypress.Commands.add("createRandomUser", () => {
   return {
@@ -9,39 +10,9 @@ Cypress.Commands.add("createRandomUser", () => {
 });
 
 Cypress.Commands.add("registerUser", () => {
-  const apiUrl = Cypress.env("API_URL");
-
   cy.createRandomUser().then((randomUser) => {
     cy.request("POST", `${apiUrl}/users`, randomUser).then(() => {
       Cypress.env("CURRENT_USER", randomUser);
     });
   });
 });
-
-// Cypress.Commands.add("adminLogin", () => {
-//   cy.createRandomUser().then((randomUser) => {
-//     cy.request("POST", "/users", randomUser)
-//       .then((userCreated) => {
-//         userCreated.body.type = 1;
-//         Cypress.env("currentUser", userCreated.body);
-
-//         cy.request("POST", `/auth/login`, {
-//           email: randomUser.email,
-//           password: randomUser.password,
-//         });
-//       })
-//       .then((userLogged) => {
-//         const { accessToken } = userLogged.body;
-//         Cypress.env("accessToken", accessToken);
-//       })
-//       .then(() => {
-//         cy.request({
-//           method: "PATCH",
-//           url: "/users/admin",
-//           headers: {
-//             Authorization: `Bearer ${Cypress.env("accessToken")}`,
-//           },
-//         });
-//       });
-//   });
-// });
