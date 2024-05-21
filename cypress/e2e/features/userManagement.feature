@@ -22,20 +22,24 @@ Funcionalidade: Gerenciamento de conta
    E o tipo de usuário deve ser "Crítico(a)"
 
  Cenário: Deve redirecionar para a página de login ao acessar a página de gerenciamento de conta sem estar logado
+   E que acesso a pagina de gerenciamento de conta
    Quando realizar o logout
    E acessar a página de gerenciamento de conta sem estar logado
    Então devo ser redirecionado para página de login
 
 
  Cenário: Não deve ser possivel alterar o email no gerenciamento de conta
+   E que acesso a pagina de gerenciamento de conta
    Então o campo de email deve estar desabilitado
 
  Cenário: Deve ser possivel alterar o nome no gerenciamento de conta
+   E que acesso a pagina de gerenciamento de conta
    Quando alterar o nome para um nome válido
    E clicar em Salvar
    Então devo visualizar a mensagem que a informação foi alterada com sucesso
 
  Cenário: Deve ser possivel alterar a senha no gerenciamento de conta
+   E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
    E preencher os campos de senha e confirmação de senha corretamente
@@ -43,6 +47,7 @@ Funcionalidade: Gerenciamento de conta
    Então devo visualizar a mensagem que a informação foi alterada com sucesso
    
  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com menos de 6 dígitos
+   E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
    E preencher os campos de senha e confirmação de senha incorretamente "<senha>"
@@ -55,6 +60,7 @@ Funcionalidade: Gerenciamento de conta
     
 
  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senha maior que 12 dígitos
+   E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
    E preencher os campos de senha e confirmação de senha incorretamente "<senha>"
@@ -66,6 +72,7 @@ Funcionalidade: Gerenciamento de conta
     | 1234567890123456 |
 
  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senhas diferentes
+   E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
    E preencher os campos de senha e confirmação de senha incorretamente "<senha>" e "<confirmacaoSenha>"
