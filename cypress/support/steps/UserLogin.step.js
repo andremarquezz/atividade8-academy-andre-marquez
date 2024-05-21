@@ -50,16 +50,16 @@ When("preencher o email com um e-mail inválido", () => {
 
 Then("devo ser autenticado e ser redirecionado para a página inicial", () => {
   cy.wait("@authUser").then(() => {
+    cy.wait(2000);
     cy.window().then((win) => {
       const sessionInfo = JSON.parse(
         win.sessionStorage.getItem("session-info")
       );
-
       expect(sessionInfo).to.be.an("object");
       expect(sessionInfo.state).to.have.property("accessToken");
       expect(sessionInfo.state.accessToken).to.be.a("string");
       expect(sessionInfo.state.accessToken).to.not.be.null;
-      // expect(sessionInfo.state.accessToken).to.not.be.empty;
+      expect(sessionInfo.state.accessToken).to.not.be.empty;
     });
   });
 
