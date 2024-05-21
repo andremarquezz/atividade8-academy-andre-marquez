@@ -138,13 +138,11 @@ Then(
   (errorMessage) => {
     userRegistrationPage
       .getErrorPasswordInput()
-      .siblings(".input-error")
       .should("be.visible")
       .and("contain.text", errorMessage);
 
     userRegistrationPage
       .getErrorConfirmPasswordInput()
-      .siblings(".input-error")
       .should("be.visible")
       .and("contain.text", errorMessage);
   }
