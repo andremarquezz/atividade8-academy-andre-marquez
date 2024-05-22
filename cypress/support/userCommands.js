@@ -9,10 +9,16 @@ Cypress.Commands.add("createRandomUser", () => {
   };
 });
 
-Cypress.Commands.add("registerUser", () => {
-  cy.createRandomUser().then((randomUser) => {
-    cy.request("POST", `${apiUrl}/users`, randomUser).then(() => {
-      Cypress.env("CURRENT_USER", randomUser);
+Cypress.Commands.add("registerUser", (user) => {
+  if (user) {
+    cy.request("POST", `${apiUrl}/users`, user).then(() => {
+      Cypress.env("CURRENT_USER", user);
     });
-  });
+  } else {
+    cy.createRandomUser().then((randomUser) => {
+      cy.request("POST", `${apiUrl}/users`, randomUser).then(() => {
+        Cypress.env("CURRENT_USER", randomUser);
+      });
+    });
+  }
 });
