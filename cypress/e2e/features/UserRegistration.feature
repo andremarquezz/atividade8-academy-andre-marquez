@@ -19,7 +19,7 @@ Funcionalidade: Cadastro de usuário
    E preencher uma senha válida "123456"
    E confirmar a senha corretamente "123456"
    E clicar no botão de Cadastrar
-   Então devo ver a mensagem de erro 'Não foi possível cadastrar o usuário.'
+   Então devo ver a mensagem de erro informando que não foi possível cadastrar o usuário
     
    Exemplos:
     | email      |
@@ -44,6 +44,24 @@ Funcionalidade: Cadastro de usuário
     | 1234567891023     | A senha deve ter no máximo 12 dígitos. |
     | 12345678910123468 | A senha deve ter no máximo 12 dígitos. |
 
+ Cenário: Deve exibir mensagem de erro para senha não preenchida
+   Quando preencher um nome válido
+   E preencher um email válido
+   E não preencher a senha
+   E confirmar a senha corretamente "123456"
+   E clicar no botão de Cadastrar
+   Então o cadastro não deve ser realizado
+   E devo ver a mensagem de erro informando que a senha é obrigatória
+
+ Cenário: Deve exibir mensagem de erro para confirmação de senha não preenchida
+   Quando preencher um nome válido
+   E preencher um email válido
+   E preencher uma senha válida "123456"
+   E não preencher a confirmação de senha
+   E clicar no botão de Cadastrar
+   Então o cadastro não deve ser realizado
+   E devo ver a mensagem de erro informando que a confirmação de senha é obrigatória
+
  Cenário: Deve exibir mensagem de erro para confirmação de senha incorreta
    Quando preencher um nome válido
    E preencher um email válido
@@ -51,7 +69,7 @@ Funcionalidade: Cadastro de usuário
    E confirmar a senha incorretamente
    E clicar no botão de Cadastrar
    Então o cadastro não deve ser realizado
-   E devo ver a mensagem de erro 'As senhas devem ser iguais.'
+   E devo ver a mensagem de erro informando que as senhas devem ser iguais
 
  Cenário: Deve exibir mensagem de erro para email já cadastrado
    Quando preencher um nome válido
@@ -59,4 +77,4 @@ Funcionalidade: Cadastro de usuário
    E preencher uma senha válida "123456"
    E confirmar a senha corretamente "123456"
    E clicar no botão de Cadastrar
-   Então devo ver a mensagem de erro 'O e-mail já está cadastrado.'
+   Então devo ver a mensagem de erro informando que o e-mail já está cadastrado.

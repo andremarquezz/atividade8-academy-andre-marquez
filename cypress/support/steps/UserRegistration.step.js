@@ -83,6 +83,10 @@ When("confirmar a senha incorretamente", () => {
   userRegistrationPage.typeConfirmPassword(password);
 });
 
+When("não preencher a senha", () => {});
+
+When("não preencher a confirmação de senha", () => {});
+
 Then("o cadastro deve ser realizado com sucesso", () => {
   cy.wait(["@registerUser", "@authUser"]);
 
@@ -115,7 +119,7 @@ Then("devo ver a mensagem de sucesso", () => {
 });
 
 Then(
-  "devo ver a mensagem de erro 'Não foi possível cadastrar o usuário.'",
+  "devo ver a mensagem de erro informando que não foi possível cadastrar o usuário",
   () => {
     const errorMessage = "Não foi possível cadastrar o usuário.";
 
@@ -142,21 +146,48 @@ Then("devo ver a {string} no campo de senha", (errorMessage) => {
     .and("contain.text", errorMessage);
 });
 
-Then("devo ver a mensagem de erro 'As senhas devem ser iguais.'", () => {
-  const errorMessage = "As senhas devem ser iguais.";
+Then(
+  "devo ver a mensagem de erro informando que as senhas devem ser iguais",
+  () => {
+    const errorMessage = "As senhas devem ser iguais.";
+
+    userRegistrationPage
+      .getErrorConfirmPasswordInput()
+      .should("be.visible")
+      .and("contain.text", errorMessage);
+  }
+);
+
+Then(
+  "devo ver a mensagem de erro informando que o e-mail já está cadastrado.",
+  () => {
+    const errorMessage = "E-mail já cadastrado. Utilize outro e-mail";
+
+    userRegistrationPage
+      .getModal()
+      .should("be.visible")
+      .and("contain.text", "Falha no cadastro.")
+      .and("contain.text", errorMessage);
+  }
+);
+
+Then("devo ver a mensagem de erro informando que a senha é obrigatória", () => {
+  const errorMessage = "Informe a senha";
 
   userRegistrationPage
-    .getErrorConfirmPasswordInput()
+    .getErrorPasswordInput()
     .should("be.visible")
     .and("contain.text", errorMessage);
 });
 
-Then("devo ver a mensagem de erro 'O e-mail já está cadastrado.'", () => {
-  const errorMessage = "E-mail já cadastrado. Utilize outro e-mail";
+Then(
+  "devo ver a mensagem de erro informando que a confirmação de senha é obrigatória",
+  () => {
+    const errorMessage = "Informe a senha";
 
-  userRegistrationPage
-    .getModal()
-    .should("be.visible")
-    .and("contain.text", "Falha no cadastro.")
-    .and("contain.text", errorMessage);
-});
+    userRegistrationPage
+      .getErrorConfirmPasswordInput()
+      .should("be.visible")
+      .and("contain.text", errorMessage);
+  }
+);
