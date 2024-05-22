@@ -83,3 +83,12 @@ Funcionalidade: Gerenciamento de conta
     | senha     | confirmacaoSenha |
     | 123456    | 1234567          |
     | 123456789 | 12345678         |
+
+ Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com campos vazios
+   Quando acesso a página de gerenciamento de conta
+   E os campos de senha e confirmação de senha estão desabilitados
+   E clicar em Alterar senha
+   E clicar em Salvar
+   Então devo visualizar a mensagem de erro que os campos de senha e confirmação de senha são obrigatórios
+
+ Cenário: Deve exibir mensagem de erro ao tentar alterar o nome com nome vazio

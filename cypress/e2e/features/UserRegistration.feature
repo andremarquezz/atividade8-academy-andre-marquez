@@ -13,37 +13,6 @@ Funcionalidade: Cadastro de usuário
    Então o cadastro deve ser realizado com sucesso
    E devo ver a mensagem de sucesso
 
- Esquema do Cenário: Deve exibir mensagem de erro para email inválido
-   Quando preencher um nome válido
-   E preencher um email inválido "<email>"
-   E preencher uma senha válida "123456"
-   E confirmar a senha corretamente "123456"
-   E clicar no botão de Cadastrar
-   Então devo ver a mensagem de erro informando que não foi possível cadastrar o usuário
-    
-   Exemplos:
-    | email      |
-    | jey@       |
-    | jey@gmail  |
-    | @gmail.com |
-    | jey@.com   |
-
- Esquema do Cenário: Deve exibir mensagem de erro para senha inválida
-   Quando preencher um nome válido
-   E preencher um email válido
-   E preencher a senha com uma senha inválida "<senha>"
-   E confirmar a senha corretamente "<senha>"
-   E clicar no botão de Cadastrar
-   Então o cadastro não deve ser realizado
-   E devo ver a "<mensagemDeErro>" no campo de senha
-    
-   Exemplos:
-    | senha             | mensagemDeErro                         |
-    | 12345             | A senha deve ter pelo menos 6 dígitos. |
-    | 1                 | A senha deve ter pelo menos 6 dígitos. |
-    | 1234567891023     | A senha deve ter no máximo 12 dígitos. |
-    | 12345678910123468 | A senha deve ter no máximo 12 dígitos. |
-
  Cenário: Deve exibir mensagem de erro para senha não preenchida
    Quando preencher um nome válido
    E preencher um email válido
@@ -78,3 +47,34 @@ Funcionalidade: Cadastro de usuário
    E confirmar a senha corretamente "123456"
    E clicar no botão de Cadastrar
    Então devo ver a mensagem de erro informando que o e-mail já está cadastrado.
+
+ Esquema do Cenário: Deve exibir mensagem de erro para senha inválida
+   Quando preencher um nome válido
+   E preencher um email válido
+   E preencher a senha com uma senha inválida "<senha>"
+   E confirmar a senha corretamente "<senha>"
+   E clicar no botão de Cadastrar
+   Então o cadastro não deve ser realizado
+   E devo ver a "<mensagemDeErro>" no campo de senha
+    
+   Exemplos:
+    | senha             | mensagemDeErro                         |
+    | 12345             | A senha deve ter pelo menos 6 dígitos. |
+    | 1                 | A senha deve ter pelo menos 6 dígitos. |
+    | 1234567891023     | A senha deve ter no máximo 12 dígitos. |
+    | 12345678910123468 | A senha deve ter no máximo 12 dígitos. |
+
+ Esquema do Cenário: Deve exibir mensagem de erro para email inválido
+   Quando preencher um nome válido
+   E preencher um email inválido "<email>"
+   E preencher uma senha válida "123456"
+   E confirmar a senha corretamente "123456"
+   E clicar no botão de Cadastrar
+   Então devo ver a mensagem de erro informando que não foi possível cadastrar o usuário
+    
+   Exemplos:
+    | email      |
+    | jey@       |
+    | jey@gmail  |
+    | @gmail.com |
+    | jey@.com   |

@@ -23,3 +23,21 @@ Funcionalidade: Login de usuário
    E preencher a senha com uma senha inválida
    E clicar no botão Login
    Então devo ver a mensagem de erro 'Falha ao autenticar'
+
+ Cenário: Deve ser exibida uma mensagem de erro ao tentar logar sem preencher o email
+   Quando preencher o email com um e-mail vazio
+   E preencher a senha com uma senha válida
+   E clicar no botão Login
+   Então devo ver a mensagem de erro 'Falha ao autenticar'
+
+ Cenário: Deve ser exibida uma mensagem de erro ao tentar logar sem preencher a senha
+   Quando preencher o email com um e-mail válido
+   E preencher a senha com uma senha vazia
+   E clicar no botão Login
+   Então devo ver a mensagem de erro 'Falha ao autenticar'
+
+ Cenário: Deve ser exibida uma mensagem de erro ao tentar logar sem preencher o email e a senha
+   Quando preencher o email com um e-mail vazio
+   E preencher a senha com uma senha vazia
+   E clicar no botão Login
+   Então devo ver a mensagem de erro 'Falha ao autenticar'
