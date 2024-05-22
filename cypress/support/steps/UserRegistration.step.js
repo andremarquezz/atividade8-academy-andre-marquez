@@ -35,27 +35,30 @@ When("preencher um email já cadastrado", () => {
     });
 });
 
-When(
-  "preencher um nome válido, um email válido, uma senha válida e confirmar a senha corretamente",
-  () => {
-    const name = faker.person.fullName();
-    const email = faker.internet.email();
-    const password = "123456";
-
-    Cypress.env("CURRENT_USER", { name, email, password });
-
-    userRegistrationPage.register(name, email, password);
-  }
-);
-
 When("preencher um nome válido", () => {
   const name = faker.person.fullName();
+  Cypress.env("CURRENT_USER", { name });
+
   userRegistrationPage.typeName(name);
 });
 
 When("preencher um email válido", () => {
   const email = faker.internet.email();
+  const currentUser = Cypress.env("CURRENT_USER");
+  Cypress.env("CURRENT_USER", { ...currentUser, email });
+
   userRegistrationPage.typeEmail(email);
+});
+
+When("preencher uma senha válida {string}", (password) => {
+  const currentUser = Cypress.env("CURRENT_USER");
+  Cypress.env("CURRENT_USER", { ...currentUser, password });
+
+  userRegistrationPage.typePassword(password);
+});
+
+When("confirmar a senha corretamente {string}", (password) => {
+  userRegistrationPage.typeConfirmPassword(password);
 });
 
 When("preencher um email inválido {string}", (email) => {
@@ -66,109 +69,94 @@ When("preencher o email {string}", () => {
   userRegistrationPage.typeEmail(email);
 });
 
-When(
-  "preencher os campos de senha e confirmação de senha com uma senha inválida {string}",
-  (password) => {
-    userRegistrationPage.typePassword(password);
-    userRegistrationPage.typeConfirmPassword(password);
-  }
-);
-
-When("preencher uma senha válida e confirmar a senha corretamente", () => {
-  const password = "123456";
-  userRegistrationPage.typePassword(password);
-  userRegistrationPage.typeConfirmPassword(password);
-});
-
 When("clicar no botão de Cadastrar", () => {
   userRegistrationPage.clickSubmitButton();
 });
 
-When("preencher uma senha válida e confirmar a senha incorretamente", () => {
-  const password = "123456";
-  const confirmPassword = "1234567";
-
+When("preencher a senha com uma senha inválida {string}", (password) => {
+  Cypress.env("PASSWORD_INVALID", password);
   userRegistrationPage.typePassword(password);
-  userRegistrationPage.typeConfirmPassword(confirmPassword);
+});
+
+When("confirmar a senha incorretamente", () => {
+  const password = "123599742";
+  userRegistrationPage.typeConfirmPassword(password);
+});
+
+Then("o cadastro deve ser realizado com sucesso", () => {
+  cy.wait(["@registerUser", "@authUser"]);
+
+  cy.window().then((win) => {
+    const sessionInfo = JSON.parse(
+      win.sessionStorage.getItem("user-session-info")
+    );
+    const currentUser = Cypress.env("CURRENT_USER");
+
+    expect(sessionInfo).to.have.property("state");
+    expect(sessionInfo.state).to.have.property("user");
+    expect(sessionInfo.state.user).to.have.property("id");
+    expect(sessionInfo.state.user.id).to.be.a("number");
+    expect(sessionInfo.state.user).to.deep.include({
+      name: currentUser.name,
+      email: currentUser.email,
+      type: 0,
+      active: true,
+    });
+  });
+});
+Then("devo ver a mensagem de sucesso", () => {
+  const successMessage = "Cadastro realizado!";
+
+  userRegistrationPage
+    .getModal()
+    .should("be.visible")
+    .and("contain.text", "Sucesso")
+    .and("contain.text", successMessage);
 });
 
 Then(
-  "o cadastro deve ser realizado com sucesso e devo ver a mensagem de sucesso",
+  "devo ver a mensagem de erro 'Não foi possível cadastrar o usuário.'",
   () => {
-    cy.wait("@registerUser");
-    cy.wait("@authUser");
-
-    cy.window().then((win) => {
-      const sessionInfo = JSON.parse(
-        win.sessionStorage.getItem("user-session-info")
-      );
-      const currentUser = Cypress.env("CURRENT_USER");
-
-      expect(sessionInfo).to.have.property("state");
-      expect(sessionInfo.state).to.have.property("user");
-      expect(sessionInfo.state.user).to.have.property("id");
-      expect(sessionInfo.state.user.id).to.be.a("number");
-      expect(sessionInfo.state.user).to.deep.include({
-        name: currentUser.name,
-        email: currentUser.email,
-        type: 0,
-        active: true,
-      });
-    });
-
-    const successMessage = "Cadastro realizado!";
+    const errorMessage = "Não foi possível cadastrar o usuário.";
 
     userRegistrationPage
       .getModal()
       .should("be.visible")
-      .and("contain.text", "Sucesso")
-      .and("contain.text", successMessage);
+      .and("contain.text", errorMessage);
   }
 );
 
-Then("devo ver a mensagem de erro {string}", (errorMessage) => {
+Then("o cadastro não deve ser realizado", () => {
+  cy.get("@registerUser.all").should("have.length", 0);
+});
+
+Then("devo ver a {string} no campo de senha", (errorMessage) => {
   userRegistrationPage
-    .getModal()
+    .getErrorPasswordInput()
+    .should("be.visible")
+    .and("contain.text", errorMessage);
+
+  userRegistrationPage
+    .getErrorConfirmPasswordInput()
     .should("be.visible")
     .and("contain.text", errorMessage);
 });
 
-Then(
-  "o cadastro não deve ser realizado e devo ver a mensagem de erro {string}",
-  (errorMessage) => {
-    userRegistrationPage
-      .getErrorPasswordInput()
-      .should("be.visible")
-      .and("contain.text", errorMessage);
+Then("devo ver a mensagem de erro 'As senhas devem ser iguais.'", () => {
+  const errorMessage = "As senhas devem ser iguais.";
 
-    userRegistrationPage
-      .getErrorConfirmPasswordInput()
-      .should("be.visible")
-      .and("contain.text", errorMessage);
-  }
-);
+  userRegistrationPage
+    .getErrorConfirmPasswordInput()
+    .should("be.visible")
+    .and("contain.text", errorMessage);
+});
 
-Then(
-  "o cadastro não deve ser realizado e devo ver a mensagem que as senhas devem ser iguais.",
-  () => {
-    const errorMessage = "As senhas devem ser iguais.";
+Then("devo ver a mensagem de erro 'O e-mail já está cadastrado.'", () => {
+  const errorMessage = "E-mail já cadastrado. Utilize outro e-mail";
 
-    userRegistrationPage
-      .getErrorConfirmPasswordInput()
-      .should("be.visible")
-      .and("contain.text", errorMessage);
-  }
-);
-
-Then(
-  "o cadastro não deve ser realizado e devo ver a mensagem de erro que o e-mail já esta cadastrado",
-  () => {
-    const errorMessage = "E-mail já cadastrado. Utilize outro e-mail";
-
-    userRegistrationPage
-      .getModal()
-      .should("be.visible")
-      .and("contain.text", "Falha no cadastro.")
-      .and("contain.text", errorMessage);
-  }
-);
+  userRegistrationPage
+    .getModal()
+    .should("be.visible")
+    .and("contain.text", "Falha no cadastro.")
+    .and("contain.text", errorMessage);
+});

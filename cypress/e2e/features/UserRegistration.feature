@@ -1,19 +1,26 @@
-#language: pt
+# language: pt
 Funcionalidade: Cadastro de usuário
 
  Contexto: O usuário deve ter acesso à página de cadastro
   Dado que acessei a página de cadastro
 
- Cenário: Deve ser possível cadastrar um usuário com sucesso
-   Quando preencher um nome válido, um email válido, uma senha válida e confirmar a senha corretamente
-   Então o cadastro deve ser realizado com sucesso e devo ver a mensagem de sucesso
-  
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar cadastrar um usuário com email inválido
+ Cenário: Deve cadastrar um usuário com sucesso
+   Quando preencher um nome válido
+   E preencher um email válido
+   E preencher uma senha válida "123456"
+   E confirmar a senha corretamente "123456"
+   E clicar no botão de Cadastrar
+   Então o cadastro deve ser realizado com sucesso
+   E devo ver a mensagem de sucesso
+
+ Esquema do Cenário: Deve exibir mensagem de erro para email inválido
    Quando preencher um nome válido
    E preencher um email inválido "<email>"
-   E preencher uma senha válida e confirmar a senha corretamente
+   E preencher uma senha válida "123456"
+   E confirmar a senha corretamente "123456"
    E clicar no botão de Cadastrar
-   Então devo ver a mensagem de erro "Não foi possível cadastrar o usuário."
+   Então devo ver a mensagem de erro 'Não foi possível cadastrar o usuário.'
+    
    Exemplos:
     | email      |
     | jey@       |
@@ -21,12 +28,15 @@ Funcionalidade: Cadastro de usuário
     | @gmail.com |
     | jey@.com   |
 
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar cadastrar um usuário com senha inválida
+ Esquema do Cenário: Deve exibir mensagem de erro para senha inválida
    Quando preencher um nome válido
    E preencher um email válido
-   E preencher os campos de senha e confirmação de senha com uma senha inválida "<senha>"
+   E preencher a senha com uma senha inválida "<senha>"
+   E confirmar a senha corretamente "<senha>"
    E clicar no botão de Cadastrar
-   Então o cadastro não deve ser realizado e devo ver a mensagem de erro "<mensagemDeErro>"
+   Então o cadastro não deve ser realizado
+   E devo ver a "<mensagemDeErro>" no campo de senha
+    
    Exemplos:
     | senha             | mensagemDeErro                         |
     | 12345             | A senha deve ter pelo menos 6 dígitos. |
@@ -34,17 +44,19 @@ Funcionalidade: Cadastro de usuário
     | 1234567891023     | A senha deve ter no máximo 12 dígitos. |
     | 12345678910123468 | A senha deve ter no máximo 12 dígitos. |
 
- Cenário: Deve exibir mensagem de erro ao confirmar a senha incorretamente
+ Cenário: Deve exibir mensagem de erro para confirmação de senha incorreta
    Quando preencher um nome válido
    E preencher um email válido
-   E preencher uma senha válida e confirmar a senha incorretamente
+   E preencher uma senha válida "123456"
+   E confirmar a senha incorretamente
    E clicar no botão de Cadastrar
-   Então o cadastro não deve ser realizado e devo ver a mensagem que as senhas devem ser iguais.
+   Então o cadastro não deve ser realizado
+   E devo ver a mensagem de erro 'As senhas devem ser iguais.'
 
- Cenário: Deve exibir mensagem de erro ao cadastrar um usuário com email já cadastrado
+ Cenário: Deve exibir mensagem de erro para email já cadastrado
    Quando preencher um nome válido
    E preencher um email já cadastrado
-   E preencher uma senha válida e confirmar a senha corretamente
+   E preencher uma senha válida "123456"
+   E confirmar a senha corretamente "123456"
    E clicar no botão de Cadastrar
-   Então o cadastro não deve ser realizado e devo ver a mensagem de erro que o e-mail já esta cadastrado
-
+   Então devo ver a mensagem de erro 'O e-mail já está cadastrado.'
