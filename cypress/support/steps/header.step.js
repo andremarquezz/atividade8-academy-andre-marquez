@@ -18,11 +18,11 @@ Before(() => {
   cy.intercept("POST", "/api/auth/login").as("authUser");
 });
 
-Given("que estou na pagina inicial", () => {
+Given("que estou na página inicial", () => {
   headerPage.visitHomePage();
 });
 
-Given("que estou na pagina de cadastro", () => {
+Given("que estou na página de cadastro", () => {
   userRegistrationPage.visit();
 });
 
@@ -62,7 +62,7 @@ Then(
 );
 
 Then(
-  "devo ver o menu de navegacao com as opcoes: Filmes, Login e Registre-se",
+  "devo ver o menu de navegação com as opções: Filmes, Login e Registre-se",
   () => {
     headerPage.getMovieListButton().should("be.visible");
     headerPage.getLoginButton().should("be.visible");
