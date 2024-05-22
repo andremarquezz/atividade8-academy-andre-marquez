@@ -31,7 +31,7 @@ Given("que estou cadastrado e logado no sistema", () => {
   });
 });
 
-Given("que acesso a pagina de gerenciamento de conta", () => {
+When("acesso a página de gerenciamento de conta", () => {
   userManagementPage.visit();
 });
 
@@ -112,7 +112,7 @@ When(
   }
 );
 
-When("realizar o logout", () => {
+When("realizo o logout", () => {
   userManagementPage.logout();
 });
 
@@ -169,7 +169,7 @@ Then("devo visualizar as minhas informações", () => {
     .and("have.value", email);
 });
 
-Then("devo ser redirecionado para página de login", () => {
+Then("devo ser redirecionado para a página de login", () => {
   cy.url().should(
     "eq",
     "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/login"
