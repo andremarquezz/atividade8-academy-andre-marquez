@@ -6,7 +6,7 @@ import {
 } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import { HeaderPage } from "../pages/HeaderPage";
-import { UserRegistrationPage } from "./UserRegistrationPage";
+import { UserRegistrationPage } from "../pages/UserRegistrationPage";
 
 const headerPage = new HeaderPage();
 const userRegistrationPage = new UserRegistrationPage();

@@ -49,4 +49,8 @@ export class HeaderPage {
   clickRegisterButton() {
     cy.get(this.registerButton).click();
   }
+
+  clickRaroLogo() {
+    cy.get(this.raroLogo).click();
+  }
 }

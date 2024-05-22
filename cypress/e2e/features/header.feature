@@ -16,7 +16,7 @@ Funcionalidade: Header das paginas
   Cenario: Deve redirecionar para pagina inicial ao clicar no logo da Raro
    Dado que estou na pagina de cadastro
    Quando clicar no logo da Raro
-   Entao devo ser redirecionado para a pagina inicial
+   Entao devo ser redirecionado para a página inicial
    
 
   # Cenario: Header da pagina de contato
