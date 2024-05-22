@@ -26,13 +26,9 @@ When("preencher um email já cadastrado", () => {
   const email = faker.internet.email();
   const password = "123456";
 
-  const apiUrl = Cypress.env("API_URL");
-
-  cy.request("POST", `${apiUrl}/users`, { name, password, email })
-    .as("RegisteringEmail")
-    .then(() => {
-      userRegistrationPage.typeEmail(email);
-    });
+  cy.registerUser({ name, email, password }).then(() => {
+    userRegistrationPage.typeEmail(email);
+  });
 });
 
 When("preencher um nome válido", () => {
