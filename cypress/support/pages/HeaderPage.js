@@ -1,7 +1,6 @@
 export class HeaderPage {
   searchInput = "input[name='search']";
   searchButton = "button.search-button";
-  searchInput = 'input[name="search"]';
   loginButton = 'a[href="/login"]';
   registerButton = 'a[href="/register"]';
   movieListButton = 'a[href="/"]';
