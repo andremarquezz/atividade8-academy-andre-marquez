@@ -62,7 +62,7 @@ Then(
 );
 
 Then(
-  "devo ver o menu de navegacao com as opcoes: Filmes, Login, Registre-se",
+  "devo ver o menu de navegacao com as opcoes: Filmes, Login e Registre-se",
   () => {
     headerPage.getMovieListButton().should("be.visible");
     headerPage.getLoginButton().should("be.visible");
