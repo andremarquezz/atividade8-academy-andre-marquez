@@ -41,18 +41,43 @@ Funcionalidade: Gerenciamento de conta
    Quando acesso a página de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    E clicar em Alterar senha
-   E preencher os campos de senha e confirmação de senha corretamente
+   E preencher a senha e confirmação de senha corretamente
    E clicar em Salvar
    Então devo visualizar a mensagem que a informação foi alterada com sucesso
+
+ Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com campos vazios
+   Quando acesso a página de gerenciamento de conta
+   E os campos de senha e confirmação de senha estão desabilitados
+   E clicar em Alterar senha
+   E clicar em Salvar
+   Então devo visualizar a mensagem de erro informando que a senha é obrigatória
+
+ Cenário: Deve exibir mensagem de erro ao tentar alterar o nome com nome vazio
+   Quando acesso a página de gerenciamento de conta
+   E alterar o nome para um nome vazio
+   E clicar em Salvar
+   Então devo visualizar a mensagem de erro que o nome é obrigatório
+
+
+ Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senhas diferentes
+   Quando acesso a página de gerenciamento de conta
+   E os campos de senha e confirmação de senha estão desabilitados
+   E clicar em Alterar senha
+   E preencher a senha e confirmação de senha incorretamente "<senha>" e "<confirmacaoSenha>"
+   E clicar em Salvar
+   Então devo visualizar a mensagem de erro que as senhas não são iguais
+   Exemplos:
+    | senha     | confirmacaoSenha |
+    | 123456    | 1234567          |
+    | 123456789 | 12345678         |
 
  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com menos de 6 dígitos
    Quando acesso a página de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    E clicar em Alterar senha
-   E preencher os campos de senha e confirmação de senha incorretamente "<senha>"
+   E preencher a senha e confirmação de senha incorretamente "<senha>"
    E clicar em Salvar
    Então devo visualizar a mensagem de erro que a senha deve ter pelo menos 6 dígitos
-    
    Exemplos:
     | senha |
     | 12345 |
@@ -62,33 +87,10 @@ Funcionalidade: Gerenciamento de conta
    Quando acesso a página de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    E clicar em Alterar senha
-   E preencher os campos de senha e confirmação de senha incorretamente "<senha>"
+   E preencher a senha e confirmação de senha incorretamente "<senha>"
    E clicar em Salvar
    Então devo visualizar a mensagem de erro que a senha deve ter no máximo 12 dígitos
-    
    Exemplos:
     | senha            |
     | 1234567890123    |
     | 1234567890123456 |
-
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senhas diferentes
-   Quando acesso a página de gerenciamento de conta
-   E os campos de senha e confirmação de senha estão desabilitados
-   E clicar em Alterar senha
-   E preencher os campos de senha e confirmação de senha incorretamente "<senha>" e "<confirmacaoSenha>"
-   E clicar em Salvar
-   Então devo visualizar a mensagem de erro que as senhas não são iguais
-    
-   Exemplos:
-    | senha     | confirmacaoSenha |
-    | 123456    | 1234567          |
-    | 123456789 | 12345678         |
-
- Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com campos vazios
-   Quando acesso a página de gerenciamento de conta
-   E os campos de senha e confirmação de senha estão desabilitados
-   E clicar em Alterar senha
-   E clicar em Salvar
-   Então devo visualizar a mensagem de erro que os campos de senha e confirmação de senha são obrigatórios
-
- Cenário: Deve exibir mensagem de erro ao tentar alterar o nome com nome vazio

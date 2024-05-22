@@ -51,6 +51,10 @@ export class UserManagementPage {
     return cy.get(this.confirmPasswordInput).siblings(this.errorInput);
   }
 
+  getErrorNameInput() {
+    return cy.get(this.nameInput).siblings(this.errorInput);
+  }
+
   clickSaveButton() {
     cy.get(this.buttonSave).click();
   }

@@ -61,6 +61,7 @@ When("clicar em Alterar senha", () => {
 });
 
 When("o tipo de usuário for do tipo {string}", (type) => {
+  cy.wait(2000);
   switch (type) {
     case "0":
       break;
@@ -93,22 +94,21 @@ When("o tipo de usuário for do tipo {string}", (type) => {
       });
       break;
     default:
-      console.log("Tipo de usuário desconhecido");
       break;
   }
 });
 
-When("preencher os campos de senha e confirmação de senha corretamente", () => {
+When("preencher a senha e confirmação de senha corretamente", () => {
   const password = "12345678";
   userManagementPage.getPasswordInput().type(password);
   userManagementPage.getConfirmPasswordInput().clear().type(password);
 });
 
 When(
-  "preencher os campos de senha e confirmação de senha incorretamente {string}",
+  "preencher a senha e confirmação de senha incorretamente {string}",
   (password) => {
     userManagementPage.getPasswordInput().type(password);
-    userManagementPage.getConfirmPasswordInput().clear().type(password);
+    userManagementPage.getConfirmPasswordInput().type(password);
   }
 );
 
@@ -121,12 +121,16 @@ When("acessar a página de gerenciamento de conta sem estar logado", () => {
 });
 
 When(
-  "preencher os campos de senha e confirmação de senha incorretamente {string} e {string}",
+  "preencher a senha e confirmação de senha incorretamente {string} e {string}",
   (password, confirmPassword) => {
     userManagementPage.getPasswordInput().type(password);
     userManagementPage.getConfirmPasswordInput().type(confirmPassword);
   }
 );
+
+When("alterar o nome para um nome vazio", () => {
+  userManagementPage.getNameInput().clear();
+});
 
 Then(
   "devo visualizar a mensagem de erro que a senha deve ter pelo menos 6 dígitos",
@@ -220,3 +224,24 @@ Then(
       .and("contain.text", errorMessage);
   }
 );
+
+Then(
+  "devo visualizar a mensagem de erro informando que a senha é obrigatória",
+  () => {
+    const errorMessage = "Campo obrigatório";
+
+    userManagementPage
+      .getErrorPasswordInput()
+      .should("be.visible")
+      .and("contain.text", errorMessage);
+  }
+);
+
+Then("devo visualizar a mensagem de erro que o nome é obrigatório", () => {
+  const errorMessage = "Informe o nome";
+
+  userManagementPage
+    .getErrorNameInput()
+    .should("be.visible")
+    .and("contain.text", errorMessage);
+});
