@@ -48,7 +48,7 @@ When("preencher o email com um e-mail inválido", () => {
   userLoginPage.typeEmail("emailinvalido");
 });
 
-Then("devo ser autenticado e ser redirecionado para a página inicial", () => {
+Then("devo ser autenticado", () => {
   cy.wait("@authUser").then(() => {
     cy.wait(2000);
     cy.window().then((win) => {
@@ -62,11 +62,13 @@ Then("devo ser autenticado e ser redirecionado para a página inicial", () => {
       expect(sessionInfo.state.accessToken).to.not.be.empty;
     });
   });
+});
 
+Then("devo ser redirecionado para a página inicial", () => {
   cy.url().should("eq", "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/");
 });
 
-Then("devo ver a mensagem de erro falha ao autenticar", () => {
+Then("devo ver a mensagem de erro 'Falha ao autenticar'", () => {
   const errorMessage = "Usuário ou senha inválidos.";
   userLoginPage
     .getModal()
