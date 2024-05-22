@@ -1,44 +1,44 @@
 #language: pt
 Funcionalidade: Gerenciamento de conta
- Contexto: O usuário deve estar cadastrado no sistema para acessar a página de gerenciamento de conta
-  Dado que estou cadastrado e logado no sistema
+  Contexto: O usuário deve estar cadastrado no sistema para acessar a página de gerenciamento de conta
+   Dado que estou cadastrado e logado no sistema
 
- Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta
+  Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta com o tipo de usuário Comum
    Quando o tipo de usuário for do tipo "0"
    E que acesso a pagina de gerenciamento de conta
    Então devo visualizar as minhas informações
    E o tipo de usuário deve ser "Comum"
 
- Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta
+  Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta com o tipo de usuário Administrador
    Quando o tipo de usuário for do tipo "1"
    E que acesso a pagina de gerenciamento de conta
    Então devo visualizar as minhas informações
    E o tipo de usuário deve ser "Administrador"
 
- Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta
+  Cenário: Deve ser possivel visualizar as informações no gerenciamento de conta com o tipo de usuário Crítico(a)
    Quando o tipo de usuário for do tipo "2"
    E que acesso a pagina de gerenciamento de conta
    Então devo visualizar as minhas informações
    E o tipo de usuário deve ser "Crítico(a)"
 
- Cenário: Deve redirecionar para a página de login ao acessar a página de gerenciamento de conta sem estar logado
+  Cenário: Deve redirecionar para a página de login ao acessar a página de gerenciamento de conta sem estar logado
    E que acesso a pagina de gerenciamento de conta
    Quando realizar o logout
    E acessar a página de gerenciamento de conta sem estar logado
    Então devo ser redirecionado para página de login
 
 
- Cenário: Não deve ser possivel alterar o email no gerenciamento de conta
+  Cenário: Não deve ser possivel alterar o email no gerenciamento de conta
    E que acesso a pagina de gerenciamento de conta
    Então o campo de email deve estar desabilitado
 
- Cenário: Deve ser possivel alterar o nome no gerenciamento de conta
+  Cenário: Deve ser possivel alterar o nome no gerenciamento de conta
    E que acesso a pagina de gerenciamento de conta
    Quando alterar o nome para um nome válido
    E clicar em Salvar
    Então devo visualizar a mensagem que a informação foi alterada com sucesso
 
- Cenário: Deve ser possivel alterar a senha no gerenciamento de conta
+  Cenário: Deve ser possivel alterar a senha no gerenciamento de conta
    E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
@@ -46,7 +46,7 @@ Funcionalidade: Gerenciamento de conta
    E clicar em Salvar
    Então devo visualizar a mensagem que a informação foi alterada com sucesso
    
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com menos de 6 dígitos
+  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com menos de 6 dígitos
    E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
@@ -59,7 +59,7 @@ Funcionalidade: Gerenciamento de conta
     | 1     |
     
 
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senha maior que 12 dígitos
+  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senha maior que 12 dígitos
    E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
@@ -71,7 +71,7 @@ Funcionalidade: Gerenciamento de conta
     | 1234567890123    |
     | 1234567890123456 |
 
- Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senhas diferentes
+  Esquema do Cenário: Deve exibir mensagem de erro ao tentar alterar a senha com senhas diferentes
    E que acesso a pagina de gerenciamento de conta
    E os campos de senha e confirmação de senha estão desabilitados
    Quando clicar em Alterar senha
