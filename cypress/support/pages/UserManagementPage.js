@@ -7,6 +7,7 @@ export class UserManagementPage {
   buttonSave = "button.account-save-button";
   buttonChangePassword = "button.account-password-button";
   modal = ".modal-body";
+  errorInput = ".input-error";
   managementUrl = "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/account";
   logoutUrl = "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/logout";
 
@@ -43,11 +44,11 @@ export class UserManagementPage {
   }
 
   getErrorPasswordInput() {
-    return cy.get(this.passwordInput).siblings(".input-error");
+    return cy.get(this.passwordInput).siblings(this.errorInput);
   }
 
   getErrorConfirmPasswordInput() {
-    return cy.get(this.confirmPasswordInput).siblings(".input-error");
+    return cy.get(this.confirmPasswordInput).siblings(this.errorInput);
   }
 
   clickSaveButton() {

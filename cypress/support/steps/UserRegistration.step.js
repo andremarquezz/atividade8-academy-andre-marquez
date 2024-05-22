@@ -23,8 +23,8 @@ Given("que acessei a página de cadastro", () => {
 
 When("preencher um email já cadastrado", () => {
   const name = faker.person.fullName();
-  const password = "123456";
   const email = faker.internet.email();
+  const password = "123456";
 
   const apiUrl = Cypress.env("API_URL");
 

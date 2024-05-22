@@ -2,6 +2,7 @@ export class UserRegistrationPage {
   nameInput = "input[name='name']";
   emailInput = "input[name='email']";
   passwordInput = 'input[name="password"]';
+  errorInput = ".input-error";
   confirmPasswordInput = 'input[name="confirmPassword"]';
   submitButton = "button.account-save-button";
   modal = ".modal-body";
@@ -31,11 +32,11 @@ export class UserRegistrationPage {
   }
 
   getErrorPasswordInput() {
-    return cy.get(this.passwordInput).siblings(".input-error");
+    return cy.get(this.passwordInput).siblings(this.errorInput);
   }
 
   getErrorConfirmPasswordInput() {
-    return cy.get(this.confirmPasswordInput).siblings(".input-error");
+    return cy.get(this.confirmPasswordInput).siblings(this.errorInput);
   }
 
   clickSubmitButton() {

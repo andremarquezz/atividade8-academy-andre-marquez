@@ -24,7 +24,7 @@ Given("que estou cadastrado", () => {
   cy.registerUser();
 });
 
-When("preencher o email com um e-mail válido", () => {
+When("preencher o e-mail com um e-mail válido", () => {
   const email = Cypress.env("CURRENT_USER").email;
 
   userLoginPage.typeEmail(email);
@@ -44,9 +44,13 @@ When("clicar no botão Login", () => {
   userLoginPage.clickSubmitButton();
 });
 
-When("preencher o email com um e-mail inválido", () => {
-  userLoginPage.typeEmail("emailinvalido");
+When("preencher o e-mail com um e-mail inválido", () => {
+  userLoginPage.typeEmail("e-mailinvalido");
 });
+
+When("não preencher o e-mail", () => {});
+
+When("não preencher a senha", () => {});
 
 Then("devo ser autenticado", () => {
   cy.wait("@authUser").then(() => {
@@ -74,5 +78,21 @@ Then("devo ver a mensagem de erro 'Falha ao autenticar'", () => {
     .getModal()
     .should("be.visible")
     .and("contain.text", "Falha ao autenticar")
+    .and("contain.text", errorMessage);
+});
+
+Then("devo ver a mensagem de erro informado que o e-mail é obrigatório", () => {
+  const errorMessage = "Informe o e-mail";
+  userLoginPage
+    .getErrorEmailInput()
+    .should("be.visible")
+    .and("contain.text", errorMessage);
+});
+
+Then("devo ver a mensagem de erro informado que a senha é obrigatório", () => {
+  const errorMessage = "Informe a senha";
+  userLoginPage
+    .getErrorPasswordInput()
+    .should("be.visible")
     .and("contain.text", errorMessage);
 });
